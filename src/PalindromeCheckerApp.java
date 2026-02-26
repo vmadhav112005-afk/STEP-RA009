@@ -4,7 +4,7 @@
  * Description: Palindrome check using Character Array and Two-Pointer Technique
  */
 
-public class UseCase4PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
