@@ -4,7 +4,7 @@
  * Description: Palindrome check ignoring spaces and case
  */
 
-public class UseCase10PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
