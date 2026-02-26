@@ -1,43 +1,37 @@
 /*
- * UseCase6PalindromeCheckerApp
+ * UseCase7PalindromeCheckerApp
  * Version: 1.0
- * Description: Palindrome check using both Queue (FIFO) and Stack (LIFO)
+ * Description: Optimized Palindrome check using Deque
  */
 
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Stack;
 
-public class UseCase6PalindromeCheckerApp {
+public class UseCase7PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         // Original String
-        String input = "level";
+        String input = "racecar";
 
-        // Create Queue (FIFO)
-        Queue<Character> queue = new LinkedList<>();
+        // Create Deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Create Stack (LIFO)
-        Stack<Character> stack = new Stack<>();
-
-        // Enqueue and Push characters
+        // Insert characters into Deque
         for (int i = 0; i < input.length(); i++) {
-            char ch = input.charAt(i);
-            queue.add(ch);     // Enqueue operation
-            stack.push(ch);    // Push operation
+            deque.addLast(input.charAt(i));   // Insert at rear
         }
 
         // Flag to track palindrome status
         boolean isPalindrome = true;
 
-        // Compare dequeue (FIFO) with pop (LIFO)
-        while (!queue.isEmpty()) {
+        // Compare front and rear elements
+        while (deque.size() > 1) {
 
-            char fromQueue = queue.remove();  // Dequeue operation
-            char fromStack = stack.pop();     // Pop operation
+            char front = deque.removeFirst();  // Remove from front
+            char rear = deque.removeLast();    // Remove from rear
 
-            if (fromQueue != fromStack) {
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }
