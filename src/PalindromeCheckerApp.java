@@ -4,7 +4,7 @@
  * Description: Palindrome check using string reverse logic
  */
 
-public class UseCase3PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
