@@ -1,29 +1,103 @@
 /*
- * UseCase11PalindromeCheckerApp
+ * UseCase12PalindromeCheckerApp
  * Version: 1.0
- * Description: Object-Oriented Palindrome Checker using Encapsulation
+ * Description: Advanced Palindrome Checker using Strategy Pattern
  */
 
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Stack;
 
+// Strategy Interface
+interface PalindromeStrategy {
+    boolean isPalindrome(String input);
+}
+
+// Stack-Based Strategy (LIFO)
+class StackStrategy implements PalindromeStrategy {
+    @Override
+    public boolean isPalindrome(String input) {
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        Stack<Character> stack = new Stack<>();
+        for (char c : normalized.toCharArray()) {
+            stack.push(c);
+        }
+        String reversed = "";
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
+        }
+        return normalized.equals(reversed);
+    }
+}
+
+// Deque-Based Strategy (Front & Rear Comparison)
+class DequeStrategy implements PalindromeStrategy {
+    @Override
+    public boolean isPalindrome(String input) {
+        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        Deque<Character> deque = new LinkedList<>();
+        for (char c : normalized.toCharArray()) {
+            deque.addLast(c);
+        }
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+// Context Class to inject strategy
+class PalindromeContext {
+    private PalindromeStrategy strategy;
+
+    public PalindromeContext(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean executeStrategy(String input) {
+        return strategy.isPalindrome(input);
+    }
+}
+
+// Main Application
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("========== Palindrome Checker ==========");
+        System.out.println("====== Advanced Palindrome Checker (Strategy Pattern) ======");
         System.out.print("Enter a string to check: ");
         String input = scanner.nextLine();
 
-        // Create PalindromeChecker object
-        PalindromeChecker checker = new PalindromeChecker();
+        System.out.println("\nChoose Algorithm:");
+        System.out.println("1. Stack-Based");
+        System.out.println("2. Deque-Based");
+        System.out.print("Enter choice (1-2): ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // consume newline
 
-        // Check if palindrome
-        boolean result = checker.checkPalindrome(input);
+        PalindromeStrategy strategy;
 
-        System.out.println("Input String : " + input);
+        switch (choice) {
+            case 1:
+                strategy = new StackStrategy();
+                break;
+            case 2:
+                strategy = new DequeStrategy();
+                break;
+            default:
+                System.out.println("Invalid choice! Defaulting to Deque strategy.");
+                strategy = new DequeStrategy();
+        }
 
+        PalindromeContext context = new PalindromeContext(strategy);
+        boolean result = context.executeStrategy(input);
+
+        System.out.println("\nInput String : " + input);
         if (result) {
             System.out.println("Result: The string is a Palindrome.");
         } else {
@@ -31,30 +105,5 @@ public class PalindromeCheckerApp {
         }
 
         scanner.close();
-    }
-}
-
-// Encapsulated PalindromeChecker Class
-class PalindromeChecker {
-
-    // Method to check palindrome
-    public boolean checkPalindrome(String str) {
-
-        // Normalize string: ignore spaces and case
-        String normalized = str.replaceAll("\\s+", "").toLowerCase();
-
-        // Two-pointer technique
-        int start = 0;
-        int end = normalized.length() - 1;
-
-        while (start < end) {
-            if (normalized.charAt(start) != normalized.charAt(end)) {
-                return false;
-            }
-            start++;
-            end--;
-        }
-
-        return true;
     }
 }
