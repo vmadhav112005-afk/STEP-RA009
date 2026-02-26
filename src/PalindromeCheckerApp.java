@@ -4,7 +4,7 @@
  * Description: Checks whether a hardcoded string is a palindrome
  */
 
-public class UseCase2PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
