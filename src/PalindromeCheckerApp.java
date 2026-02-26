@@ -7,7 +7,7 @@
 import java.util.Deque;
 import java.util.LinkedList;
 
-public class UseCase7PalindromeCheckerApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
